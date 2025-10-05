@@ -3,15 +3,126 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0F172A;
-  --fg: #F1F5F9;
+  color-scheme: dark;
+  background-color: #0F172A;
+  color: #F1F5F9;
 }
 
-html, body { height: 100%; }
-body { color: var(--fg); background: var(--bg); }
+* {
+  box-sizing: border-box;
+}
 
-.container-narrow { @apply max-w-3xl mx-auto px-4; }
-.card { @apply bg-white/5 border border-white/10 rounded-2xl p-6 shadow-lg; }
-.btn { @apply inline-flex items-center justify-center rounded-xl px-4 py-2 font-medium border border-white/15 bg-white/10 hover:bg-white/20 transition; }
-.btn-primary { @apply bg-halo text-ink hover:bg-amber-400 border-transparent; }
-.link { @apply underline decoration-white/30 underline-offset-4 hover:decoration-halo; }
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 1rem;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  background-color: #0F172A;
+  color: #F1F5F9;
+}
+
+main {
+  flex: 1 1 auto;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: inherit;
+}
+
+.container-page {
+  @apply mx-auto w-full max-w-[72rem] px-6 md:px-12;
+}
+
+.section {
+  @apply py-24 md:py-32;
+}
+
+.btn {
+  @apply inline-flex min-h-[2.75rem] min-w-[2.75rem] items-center justify-center rounded-full border border-white/10 bg-white/10 px-5 py-3 text-base font-medium text-cloud/90 transition duration-200 ease-out hover:text-cloud focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-halo motion-reduce:transition-none;
+}
+
+.btn-primary {
+  @apply bg-halo text-ink shadow-[0_10px_30px_-20px_rgba(245,158,11,0.65)] hover:bg-amber-300 focus-visible:outline-offset-2;
+}
+
+.badge {
+  @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-medium text-cloud/80;
+}
+
+.badge::before {
+  content: "";
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.95), rgba(245, 158, 11, 0.6));
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+}
+
+.halo-orb {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.halo-orb::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 20%;
+  inset-block-start: 25%;
+  width: clamp(18rem, 40vw, 28rem);
+  aspect-ratio: 1 / 1;
+  background: radial-gradient(circle at 30% 30%, rgba(245, 158, 11, 0.55), rgba(15, 23, 42, 0));
+  filter: blur(48px);
+  opacity: 0.75;
+  transform: translate3d(0, 0, 0) scale(1);
+  transition: opacity 300ms ease, transform 1000ms ease;
+  animation: haloPulse 12s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .halo-orb::before {
+    animation: none;
+    transition: none;
+  }
+}
+
+@keyframes haloPulse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(0.95);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate3d(0, -3%, 0) scale(1.05);
+    opacity: 0.85;
+  }
+}
+
+.card-surface {
+  @apply rounded-[2rem] border border-white/10 bg-white/[0.03] p-10 shadow-[0_25px_60px_-40px_rgba(15,23,42,0.8)] backdrop-blur;
+}
+
+.surface-panel {
+  @apply rounded-3xl border border-white/[0.08] bg-white/[0.04] p-8 shadow-[0_18px_48px_-36px_rgba(15,23,42,0.9)] transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lift motion-reduce:transform-none motion-reduce:shadow-none;
+}
+
+.link-inline {
+  @apply underline decoration-white/20 underline-offset-[6px] transition-colors hover:decoration-white/50;
+}
+
+input::placeholder {
+  color: rgba(241, 245, 249, 0.55);
+}
