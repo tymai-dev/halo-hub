@@ -12,10 +12,30 @@ pnpm dev # or npm run dev
 ## Deploy (Vercel)
 
 1. Create a new project and import this repo.
-2. Add **Environment Variables** (optional for emails):
+2. Add **Environment Variables** (optional for emails/database):
    - `RESEND_API_KEY` = your API key (optional, enables transactional emails)
    - `ADMIN_EMAIL` = hello@halohub.com (or your admin inbox)
+   - `SUPABASE_URL` = project URL (e.g., `https://xyzcompany.supabase.co`)
+   - `SUPABASE_SERVICE_ROLE_KEY` = service role key used for server-side inserts
 3. Deploy. If `RESEND_API_KEY` is not set, the waitlist form still works (no-op server email).
+
+### Optional: Capture signups in Supabase
+
+1. In your Supabase project, create a `signups` table:
+
+   ```sql
+   create table if not exists public.signups (
+     id uuid primary key default gen_random_uuid(),
+     email text not null,
+     role text not null,
+     source text,
+     created_at timestamptz not null default now()
+   );
+   ```
+
+2. Keep Row Level Security enabled and add a policy that allows inserts from the service role key (default behaviour).
+3. Add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to your Vercel project (or use an anon key if your policies allow it).
+4. Submissions to `/api/subscribe` will be inserted into the `signups` table alongside email delivery via Resend (if configured).
 
 ### Continuous deployment from `master`
 
