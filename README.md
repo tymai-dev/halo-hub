@@ -17,6 +17,19 @@ pnpm dev # or npm run dev
    - `ADMIN_EMAIL` = hello@halohub.com (or your admin inbox)
 3. Deploy. If `RESEND_API_KEY` is not set, the waitlist form still works (no-op server email).
 
+### Continuous deployment from `master`
+
+Merges to `master` automatically build and deploy via GitHub Actions. Configure the following
+repository secrets so the workflow can authenticate with Vercel:
+
+- `VERCEL_TOKEN`
+- `VERCEL_ORG_ID`
+- `VERCEL_PROJECT_ID`
+
+Once the secrets are set, every push to `master` will run `npm run build`, create a production
+bundle with `vercel build`, and deploy it with `vercel deploy --prod`, ensuring the live site is
+updated immediately after PRs are merged.
+
 ## Project Structure
 
 - `app/` — App Router pages and API route
