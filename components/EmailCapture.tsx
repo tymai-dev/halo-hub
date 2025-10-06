@@ -33,9 +33,21 @@ export default function EmailCapture() {
     <div className="space-y-3">
       <form
         onSubmit={onSubmit}
-        className="flex flex-col gap-3 sm:flex-row sm:items-center"
+        className="flex flex-col gap-3"
         aria-describedby="waitlist-help"
       >
+        <label htmlFor="name" className="sr-only">
+          Full name
+        </label>
+        <input
+          id="name"
+          className="w-full rounded-2xl border border-white/15 bg-white/[0.08] px-5 py-3.5 text-base text-cloud placeholder:text-cloud/50 transition-colors duration-200 ease-out focus:border-white/40 focus:bg-white/[0.12] focus:outline-none focus:ring-2 focus:ring-halo/80 motion-reduce:transition-none"
+          type="text"
+          name="name"
+          placeholder="Your name"
+          required
+          autoComplete="name"
+        />
         <label htmlFor="email" className="sr-only">
           Email address
         </label>
@@ -48,20 +60,16 @@ export default function EmailCapture() {
           required
           autoComplete="email"
         />
-        <label htmlFor="role" className="sr-only">
-          Role
+        <label htmlFor="about" className="sr-only">
+          About you
         </label>
-        <select
-          id="role"
-          name="role"
-          className="w-full rounded-2xl border border-white/15 bg-white/[0.06] px-5 py-3.5 text-base text-cloud/80 transition-colors duration-200 ease-out focus:border-white/40 focus:outline-none focus:ring-2 focus:ring-halo/80 sm:w-auto motion-reduce:transition-none"
-          defaultValue="family"
-        >
-          <option value="family">Family</option>
-          <option value="donor">Donor</option>
-          <option value="helper">Helper</option>
-          <option value="other">Other</option>
-        </select>
+        <textarea
+          id="about"
+          name="about"
+          placeholder="Tell us about your work, mission, or how we can help."
+          className="min-h-28 w-full rounded-2xl border border-white/15 bg-white/[0.06] px-5 py-3.5 text-base text-cloud/80 placeholder:text-cloud/50 transition-colors duration-200 ease-out focus:border-white/40 focus:outline-none focus:ring-2 focus:ring-halo/80 motion-reduce:transition-none"
+          required
+        />
         <button
           className="btn btn-primary sm:self-stretch"
           type="submit"

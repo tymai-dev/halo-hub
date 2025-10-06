@@ -5,9 +5,16 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const email = String(body.email || '').trim();
-    const role = String(body.role || 'other').trim();
+    const name = String(body.name || '').trim();
+    const about = String(body.about || '').trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ ok: false, error: 'invalid_email' }, { status: 400 });
+    }
+    if (!name) {
+      return NextResponse.json({ ok: false, error: 'missing_name' }, { status: 400 });
+    }
+    if (!about) {
+      return NextResponse.json({ ok: false, error: 'missing_about' }, { status: 400 });
     }
     const resendKey = process.env.RESEND_API_KEY;
     const adminEmail = process.env.ADMIN_EMAIL || 'hello@halohub.com';
@@ -24,7 +31,7 @@ export async function POST(req: NextRequest) {
             Authorization: `Bearer ${supabaseKey}`,
             Prefer: 'return=minimal',
           },
-          body: JSON.stringify({ email, role, source: 'web' }),
+          body: JSON.stringify({ email, name, about, source: 'web' }),
         });
         if (!response.ok) {
           console.error('[supabase] failed to insert signup', await response.text());
@@ -36,10 +43,10 @@ export async function POST(req: NextRequest) {
 
     if (resendKey) {
       const resend = new Resend(resendKey);
-      await resend.emails.send({ from: 'HaloHub <noreply@halohub.com>', to: adminEmail, subject: 'New pilot signup', text: `Email: ${email}\nRole: ${role}` });
+      await resend.emails.send({ from: 'HaloHub <noreply@halohub.com>', to: adminEmail, subject: 'New pilot signup', text: `Name: ${name}\nEmail: ${email}\nAbout: ${about}` });
       await resend.emails.send({ from: 'HaloHub <noreply@halohub.com>', to: email, subject: 'Welcome to the HaloHub pilot', text: 'Thanks for joining. We\'ll be in touch with next steps and transparency updates.' });
     } else {
-      console.log('[signup]', { email, role });
+      console.log('[signup]', { email, name, about });
     }
     return NextResponse.json({ ok: true });
   } catch (e) {
