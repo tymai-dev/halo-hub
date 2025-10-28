@@ -3,9 +3,39 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: light;
+  --color-bg: #f8fafc;
+  --color-text: #0f172a;
+  --color-subtle: #475569;
+  --surface-card-bg: rgba(255, 255, 255, 0.86);
+  --surface-card-border: rgba(148, 163, 184, 0.28);
+  --surface-panel-bg: rgba(255, 255, 255, 0.8);
+  --surface-panel-border: rgba(148, 163, 184, 0.26);
+  --button-border: rgba(148, 163, 184, 0.4);
+  --button-bg: rgba(148, 163, 184, 0.15);
+  --button-text: rgba(15, 23, 42, 0.85);
+  --badge-border: rgba(148, 163, 184, 0.35);
+  --badge-bg: rgba(148, 163, 184, 0.18);
+  --link-underline: rgba(71, 85, 105, 0.25);
+  --link-hover: rgba(15, 23, 42, 0.6);
+}
+
+html.dark {
   color-scheme: dark;
-  background-color: #0F172A;
-  color: #F1F5F9;
+  --color-bg: #0f172a;
+  --color-text: #f1f5f9;
+  --color-subtle: #cbd5f5;
+  --surface-card-bg: rgba(255, 255, 255, 0.04);
+  --surface-card-border: rgba(255, 255, 255, 0.12);
+  --surface-panel-bg: rgba(255, 255, 255, 0.05);
+  --surface-panel-border: rgba(255, 255, 255, 0.12);
+  --button-border: rgba(241, 245, 249, 0.18);
+  --button-bg: rgba(241, 245, 249, 0.08);
+  --button-text: rgba(241, 245, 249, 0.92);
+  --badge-border: rgba(241, 245, 249, 0.2);
+  --badge-bg: rgba(255, 255, 255, 0.08);
+  --link-underline: rgba(241, 245, 249, 0.25);
+  --link-hover: rgba(241, 245, 249, 0.75);
 }
 
 * {
@@ -17,6 +47,11 @@ body {
   min-height: 100%;
 }
 
+html {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
 body {
   margin: 0;
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -24,8 +59,9 @@ body {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  background-color: #0F172A;
-  color: #F1F5F9;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
 main {
@@ -49,7 +85,10 @@ a:hover {
 }
 
 .btn {
-  @apply inline-flex min-h-[2.75rem] min-w-[2.75rem] items-center justify-center rounded-full border border-white/10 bg-white/10 px-5 py-3 text-base font-medium text-cloud/90 transition duration-200 ease-out hover:text-cloud focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-halo motion-reduce:transition-none;
+  @apply inline-flex min-h-[2.75rem] min-w-[2.75rem] items-center justify-center rounded-full px-5 py-3 text-base font-medium transition duration-200 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-halo motion-reduce:transition-none;
+  border: 1px solid var(--button-border);
+  background-color: var(--button-bg);
+  color: var(--button-text);
 }
 
 .btn-primary {
@@ -57,7 +96,10 @@ a:hover {
 }
 
 .badge {
-  @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-medium text-cloud/80;
+  @apply inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium;
+  border: 1px solid var(--badge-border);
+  background-color: var(--badge-bg);
+  color: var(--color-subtle);
 }
 
 .badge::before {
@@ -112,17 +154,30 @@ a:hover {
 }
 
 .card-surface {
-  @apply rounded-[2rem] border border-white/10 bg-white/[0.03] p-10 shadow-[0_25px_60px_-40px_rgba(15,23,42,0.8)] backdrop-blur;
+  @apply rounded-[2rem] p-10 shadow-[0_25px_60px_-40px_rgba(15,23,42,0.2)] backdrop-blur;
+  border: 1px solid var(--surface-card-border);
+  background-color: var(--surface-card-bg);
 }
 
 .surface-panel {
-  @apply rounded-3xl border border-white/[0.08] bg-white/[0.04] p-8 shadow-[0_18px_48px_-36px_rgba(15,23,42,0.9)] transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lift motion-reduce:transform-none motion-reduce:shadow-none;
+  @apply rounded-3xl p-8 shadow-[0_18px_48px_-36px_rgba(15,23,42,0.12)] transition duration-200 ease-out hover:-translate-y-1 hover:shadow-lift motion-reduce:transform-none motion-reduce:shadow-none;
+  border: 1px solid var(--surface-panel-border);
+  background-color: var(--surface-panel-bg);
 }
 
 .link-inline {
-  @apply underline decoration-white/20 underline-offset-[6px] transition-colors hover:decoration-white/50;
+  @apply underline underline-offset-[6px] transition-colors;
+  text-decoration-color: var(--link-underline);
+}
+
+.link-inline:hover {
+  text-decoration-color: var(--link-hover);
+}
+
+html.dark input::placeholder {
+  color: rgba(241, 245, 249, 0.55);
 }
 
 input::placeholder {
-  color: rgba(241, 245, 249, 0.55);
+  color: rgba(100, 116, 139, 0.7);
 }

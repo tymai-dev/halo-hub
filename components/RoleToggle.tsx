@@ -110,19 +110,21 @@ export default function RoleToggle() {
       <div className="card-surface space-y-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="max-w-2xl space-y-3">
-            <h2 className="text-3xl font-semibold tracking-tight text-cloud">One account. Switch perspectives.</h2>
-            <p className="text-base text-cloud/70">
+            <h2 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-cloud">
+              One account. Switch perspectives.
+            </h2>
+            <p className="text-base text-slate-600 dark:text-cloud/70">
               Change what helps you today — and help someone else tomorrow. That’s the HALO loop.
             </p>
           </div>
           <div
             role="tablist"
             aria-label="Select a HaloHub perspective"
-            className="relative isolate grid grid-cols-3 gap-0 rounded-full border border-white/12 bg-white/[0.06] p-1 text-sm shadow-inner shadow-black/20"
+            className="relative isolate grid grid-cols-3 gap-0 rounded-full border border-slate-200/70 bg-white/80 p-1 text-sm shadow-inner shadow-black/10 dark:border-white/15 dark:bg-white/[0.08]"
             id={tablistId}
           >
             <span
-              className="pointer-events-none absolute inset-y-1 left-1 rounded-full bg-cloud text-ink shadow-[0_18px_45px_-30px_rgba(241,245,249,0.85)] transition-transform duration-300 ease-out motion-reduce:transition-none"
+              className="pointer-events-none absolute inset-y-1 left-1 rounded-full bg-slate-900 text-white shadow-[0_18px_45px_-30px_rgba(15,23,42,0.45)] transition-transform duration-300 ease-out dark:bg-cloud dark:text-ink motion-reduce:transition-none"
               style={thumbStyle}
               aria-hidden="true"
             />
@@ -143,7 +145,9 @@ export default function RoleToggle() {
                   onClick={() => setActiveRole(role.id)}
                   onKeyDown={(event) => handleKeyDown(event, index, role.id)}
                   className={`relative z-10 flex min-h-[2.75rem] items-center justify-center rounded-full px-5 py-3 font-medium transition-colors duration-200 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-halo motion-reduce:transition-none ${
-                    isActive ? "text-ink" : "text-cloud/70 hover:text-cloud"
+                    isActive
+                      ? "text-white dark:text-ink"
+                      : "text-slate-600 hover:text-slate-800 dark:text-cloud/70 dark:hover:text-cloud"
                   }`}
                 >
                   {role.label}
@@ -156,19 +160,19 @@ export default function RoleToggle() {
           role="tabpanel"
           id={`${panelBaseId}-${activeContent.id}`}
           aria-labelledby={`${tablistId}-${activeContent.id}`}
-          className="space-y-6 rounded-3xl border border-white/[0.08] bg-white/[0.04] p-8 text-base text-cloud/80 shadow-[0_18px_48px_-36px_rgba(15,23,42,0.9)]"
+          className="space-y-6 rounded-3xl border border-slate-200/70 bg-white/80 p-8 text-base text-slate-600 shadow-[0_18px_48px_-36px_rgba(15,23,42,0.25)] dark:border-white/12 dark:bg-white/[0.05] dark:text-cloud/80"
         >
-          <p className="text-lg text-cloud/90">{activeContent.intro}</p>
+          <p className="text-lg text-slate-700 dark:text-cloud/90">{activeContent.intro}</p>
           <ul className="space-y-2.5">
             {activeContent.points.map((point) => (
-              <li key={point} className="flex gap-3 text-cloud/75">
-                <span className="mt-1 inline-flex h-1.5 w-1.5 flex-none rounded-full bg-cloud/60" aria-hidden="true" />
+              <li key={point} className="flex gap-3 text-slate-600 dark:text-cloud/75">
+                <span className="mt-1 inline-flex h-1.5 w-1.5 flex-none rounded-full bg-slate-400/60 dark:bg-cloud/60" aria-hidden="true" />
                 <span>{point}</span>
               </li>
             ))}
           </ul>
         </div>
-        <p className="text-sm text-cloud/60">
+        <p className="text-sm text-slate-500 dark:text-cloud/60">
           Currently viewing: {activeContent.label} perspective.
         </p>
       </div>
